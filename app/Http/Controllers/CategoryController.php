@@ -13,7 +13,7 @@ class CategoryController extends Controller
 
     public function showCategory($id)
     {
-        $category = 'Electronics';
+        $category = 'Football';
         return view('category.index', compact('category'));
     }
 

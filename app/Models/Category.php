@@ -8,4 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
+
+    public function convert(array $array, int $parent_id = null): array
+    {
+        $nested_categories = [];
+
+        foreach ($array as $category) {
+            $category['children'] = [];
+            if ($category['parent_id'] == $parent_id) {
+               $children = $this->convert($array, $category['id']);
+               if ($children) {
+                   $category['children'] = $children;
+               }
+                $nested_categories[] = $category;
+            }
+        }
+        return $nested_categories;
+    }
 }

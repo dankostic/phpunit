@@ -6,7 +6,7 @@
             <ul class="dropdown menu" data-dropdown-menu>
                 <li class="menu-text"><a href="/category">Multi level categories</a></li>
                 <li class="has-submenu">
-                    <a href="/show-category/1">Electronics</a>
+                    <a href="/show-category/1">Football</a>
                     <ul class="submenu menu vertical" data-submenu>
                         <li><a href="#">Monitors</a></li>
                         <li><a href="#">Tablets</a></li>
@@ -94,7 +94,7 @@
                 >Parent category
                     <select>
                         <option>--choose--</option>
-                        <option value="">Electronics</option>
+                        <option value="">Football</option>
                         <option value="">&nbsp;&nbsp;Monitors</option>
                         <option value="">&nbsp;&nbsp;Tablets</option>
                         <option value="">&nbsp;&nbsp;Computers</option>

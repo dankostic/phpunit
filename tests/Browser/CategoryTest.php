@@ -56,7 +56,7 @@ class CategoryTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->visit('/category');
             $h5 = $browser->element('div.basic-card-content h5')->getAttribute('innerHTML');
-                $browser->assertSeeLink('Electronics')
+                $browser->assertSeeLink('Football')
                 ->assertSee($h5)
                 ->click();
         });
@@ -93,7 +93,7 @@ class CategoryTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->visit('/category');
             $this->assertEquals(18, count($browser->elements('ul.dropdown li')));
-            $browser->assertSeeIn('ul.dropdown > li:nth-child(2) > a', 'Electronics');
+            $browser->assertSeeIn('ul.dropdown > li:nth-child(2) > a', 'Football');
             $browser->assertSeeIn('ul.dropdown > li:nth-child(3) > a', 'Videos');
             $browser->assertSeeIn('ul.dropdown > li:nth-child(4) > a', 'Software');
             $browser->assertSeeIn('ul.dropdown > :nth-child(2) > :nth-child(2) > :nth-child(1) > a', 'Monitors');
