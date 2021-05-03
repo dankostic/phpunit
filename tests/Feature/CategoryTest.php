@@ -16,84 +16,78 @@ class CategoryTest extends TestCase
     }
 
     /**
-     * A basic feature test example.
-     *
-     * @return void
+     * @dataProvider arrayProvider
      */
-    public function test_can_convert_database_results_to_category_array()
+    public function test_can_convert_database_results_to_category_nested_array($after_conversion, $db_result)
     {
-       $db_result = [
-           ['id' => 1, 'name' => 'Football', 'parent_id' => null],
-           ['id' => 2, 'name' => 'Basketball', 'parent_id' => null],
-           ['id' => 3, 'name' => 'Ice Hockey', 'parent_id' => null],
-       ];
-
-       $after_conversion = [
-           ['id' => 1, 'name' => 'Football', 'parent_id' => null, 'children' => []],
-           ['id' => 2, 'name' => 'Basketball', 'parent_id' => null, 'children' => []],
-           ['id' => 3, 'name' => 'Ice Hockey', 'parent_id' => null, 'children' => []],
-       ];
-
-       $this->assertEquals($after_conversion, $this->category->convert($db_result));
-    }
-
-    public function test_can_convert_database_results_to_one_level_category_nested_array()
-    {
-        $db_result = [
-            ['id' => 1, 'name' => 'Football', 'parent_id' => null],
-            ['id' => 2, 'name' => 'Premier league', 'parent_id' => 1],
-        ];
-
-        $after_conversion = [
-            [
-                'id' => 1,
-                'name' => 'Football',
-                'parent_id' => null,
-                'children' => [
-                    [
-                        'id' => 2,
-                        'name' => 'Premier league',
-                        'parent_id' => 1,
-                        'children' => []
-                    ]
-                ]
-            ],
-        ];
-
         $this->assertEquals($after_conversion, $this->category->convert($db_result));
     }
 
-    public function test_can_convert_database_results_to_two_level_category_nested_array()
+    public function arrayProvider()
     {
-        $db_result = [
-            ['id' => 1, 'name' => 'Football', 'parent_id' => null],
-            ['id' => 2, 'name' => 'Premier league', 'parent_id' => 1],
-            ['id' => 3, 'name' => 'Ice hockey', 'parent_id' => 2],
-        ];
-
-        $after_conversion = [
-            [
-                'id' => 1,
-                'name' => 'Football',
-                'parent_id' => null,
-                'children' => [
+        return [
+            'one level' => [
+                [
+                    ['id' => 1, 'name' => 'Football', 'parent_id' => null, 'children' => []],
+                    ['id' => 2, 'name' => 'Basketball', 'parent_id' => null, 'children' => []],
+                    ['id' => 3, 'name' => 'Ice Hockey', 'parent_id' => null, 'children' => []],
+                ],
+                [
+                    ['id' => 1, 'name' => 'Football', 'parent_id' => null],
+                    ['id' => 2, 'name' => 'Basketball', 'parent_id' => null],
+                    ['id' => 3, 'name' => 'Ice Hockey', 'parent_id' => null],
+                ]
+            ],
+            'two level' => [
+                [
                     [
-                        'id' => 2,
-                        'name' => 'Premier league',
-                        'parent_id' => 1,
+                        'id' => 1,
+                        'name' => 'Football',
+                        'parent_id' => null,
                         'children' => [
                             [
-                                'id' => 3,
-                                'name' => 'Ice hockey',
-                                'parent_id' => 2,
+                                'id' => 2,
+                                'name' => 'Premier league',
+                                'parent_id' => 1,
                                 'children' => []
                             ]
                         ]
                     ]
+                ],
+                [
+                    ['id' => 1, 'name' => 'Football', 'parent_id' => null],
+                    ['id' => 2, 'name' => 'Premier league', 'parent_id' => 1],
+                ]
+            ],
+            'three level' => [
+                [
+                    [
+                        'id' => 1,
+                        'name' => 'Football',
+                        'parent_id' => null,
+                        'children' => [
+                            [
+                                'id' => 2,
+                                'name' => 'Premier league',
+                                'parent_id' => 1,
+                                'children' => [
+                                    [
+                                        'id' => 3,
+                                        'name' => 'Ice hockey',
+                                        'parent_id' => 2,
+                                        'children' => []
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    ['id' => 1, 'name' => 'Football', 'parent_id' => null],
+                    ['id' => 2, 'name' => 'Premier league', 'parent_id' => 1],
+                    ['id' => 3, 'name' => 'Ice hockey', 'parent_id' => 2],
                 ]
             ],
         ];
-
-        $this->assertEquals($after_conversion, $this->category->convert($db_result));
     }
 }
