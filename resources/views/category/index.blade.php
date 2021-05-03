@@ -4,9 +4,9 @@
     <div class="top-bar">
         <div class="top-bar-left">
             <ul class="dropdown menu" data-dropdown-menu>
-                <li class="menu-text">Multi level categories</li>
+                <li class="menu-text"><a href="/category">Multi level categories</a></li>
                 <li class="has-submenu">
-                    <a href="#">Electronics</a>
+                    <a href="/show-category/1">Electronics</a>
                     <ul class="submenu menu vertical" data-submenu>
                         <li><a href="#">Monitors</a></li>
                         <li><a href="#">Tablets</a></li>
@@ -62,24 +62,33 @@
         <div class="grid-x grid-margin-x">
             <div class="medium-6 cell">
                 <h3>
-                    Edit/Add a new category
+                    <?=$edit_category ?? 'Add new category' ?>
                 </h3>
-                <div class="callout success">
-                    Category was saved
-                </div>
+                <?php if(isset($categorySaved) && $categorySaved == false): ?>
                 <div class="callout alert">
                     Fill correctly the form
                 </div>
+                <?php endif;
+                if(isset($categorySaved) && $categorySaved == true):
+                ?>
+                <div class="callout success">
+                    Category was saved
+                </div>
+                <?php endif; ?>
+                @if(!empty($category_deleted))
                 <div class="callout alert">
                     Category was deleted
                 </div>
+                @endif
+                <form action="/save-category" method="POST">
+                    @csrf
                 <label
                 >Name
-                    <input type="text" placeholder="Name" />
+                    <input type="text" placeholder="Name" name="name" />
                 </label>
                 <label
                 >Description
-                    <textarea placeholder="Description"></textarea>
+                    <textarea placeholder="Description" name="description"></textarea>
                 </label>
                 <label
                 >Parent category
@@ -113,12 +122,13 @@
                     class="button expanded"
                     value="Save category"
                 />
+                </form>
             </div>
 
             <div class="medium-6 large-5 cell large-offset-1">
                 <div class="basic-card">
                     <div class="basic-card-content content callout secondary">
-                        <h5>Computers</h5>
+                        <h5><?= $category ?? "Computer"?></h5>
                         <p>
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi
                             saepe, asperiores dolor nesciunt dolore, accusamus minus
@@ -129,10 +139,10 @@
                     <div class="links callout primary">
                         <ul class="menu">
                             <li>
-                                <a href="#">Edit</a>
+                                <a href="/edit-category/1">Edit</a>
                             </li>
                             <li>
-                                <a href="#" id="delete-category-confirmation" onclick="return confirm('Are you sure?')">Delete</a>
+                                <a href="/delete-category/1" id="delete-category-confirmation" onclick="return confirm('Are you sure?')">Delete</a>
                             </li>
                         </ul>
                     </div>

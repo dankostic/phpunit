@@ -17,7 +17,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/category', [CategoryController::class, 'index']);
+Route::get('category', [CategoryController::class, 'index']);
+Route::get('delete-category/{id}', [CategoryController::class, 'deleteCategory']);
+Route::get('show-category/{id}', [CategoryController::class, 'showCategory']);
+Route::get('edit-category/{id}', [CategoryController::class, 'editCategory']);
+Route::post('save-category', [CategoryController::class, 'saveCategory']);
+
+
+
 
 Auth::routes();
 
