@@ -9,6 +9,12 @@ use Tests\TestCase;
 
 class CategoryTest extends TestCase
 {
+    protected $category;
+    public function setUp(): void
+    {
+        $this->category = new Category();
+    }
+
     /**
      * A basic feature test example.
      *
@@ -28,8 +34,7 @@ class CategoryTest extends TestCase
            ['id' => 3, 'name' => 'Ice Hockey', 'parent_id' => null, 'children' => []],
        ];
 
-       $category = new Category();
-       $this->assertEquals($after_conversion, $category->convert($db_result));
+       $this->assertEquals($after_conversion, $this->category->convert($db_result));
     }
 
     public function test_can_convert_database_results_to_one_level_category_nested_array()
@@ -55,8 +60,7 @@ class CategoryTest extends TestCase
             ],
         ];
 
-        $category = new Category();
-        $this->assertEquals($after_conversion, $category->convert($db_result));
+        $this->assertEquals($after_conversion, $this->category->convert($db_result));
     }
 
     public function test_can_convert_database_results_to_two_level_category_nested_array()
@@ -90,7 +94,6 @@ class CategoryTest extends TestCase
             ],
         ];
 
-        $category = new Category();
-        $this->assertEquals($after_conversion, $category->convert($db_result));
+        $this->assertEquals($after_conversion, $this->category->convert($db_result));
     }
 }
