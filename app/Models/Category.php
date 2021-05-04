@@ -9,6 +9,16 @@ class Category extends Model
 {
     use HasFactory;
 
+    /**
+     * @var
+     */
+    public $categoryList;
+
+    /**
+     * @param array $array
+     * @param int|null $parent_id
+     * @return array
+     */
     public function convert(array $array, int $parent_id = null): array
     {
         $nested_categories = [];

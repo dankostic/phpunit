@@ -9,11 +9,6 @@ use App\Models\Category;
 class HtmlList extends Category
 {
     /**
-     * @var
-     */
-    public $categoryList;
-
-    /**
      * @var string
      */
     public $open_ul = '<ul>';

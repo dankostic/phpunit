@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Category;
 use App\Services\HtmlList;
+use App\Services\SelectList;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -27,11 +28,13 @@ class CategoryTest extends TestCase
     /**
      * @dataProvider arrayProvider
      */
-    public function test_can_produce_html_nested_categories($after_conversion, $db_result, $html_list)
+    public function test_can_produce_html_nested_categories(array $after_conversion, array $db_result, string $html_list, array $select_list)
     {
         $html = new HtmlList();
+        $html_select = new SelectList();
         $after_conversion = $html->convert($db_result);
         $this->assertEquals($html_list, $html->makeUlList($after_conversion));
+        $this->assertEquals($select_list, $html_select->makeSelectList($after_conversion));
     }
 
     public function arrayProvider()
@@ -48,7 +51,12 @@ class CategoryTest extends TestCase
                     ['id' => 2, 'name' => 'Basketball', 'parent_id' => null],
                     ['id' => 3, 'name' => 'Ice Hockey', 'parent_id' => null],
                 ],
-                '<ul><li>Football</li><li>Basketball</li><li>Ice Hockey</li></ul>'
+                '<ul><li>Football</li><li>Basketball</li><li>Ice Hockey</li></ul>',
+                [
+                    ['name' => 'Football'],
+                    ['name' => 'Basketball'],
+                    ['name' => 'Ice Hockey'],
+                ],
             ],
             'two level' => [
                 [
@@ -70,7 +78,11 @@ class CategoryTest extends TestCase
                     ['id' => 1, 'name' => 'Football', 'parent_id' => null],
                     ['id' => 2, 'name' => 'Premier league', 'parent_id' => 1],
                 ],
-                '<ul><li>Football<ul><li>Premier league</li></ul></li></ul>'
+                '<ul><li>Football<ul><li>Premier league</li></ul></li></ul>',
+                [
+                    ['name' => 'Football'],
+                    ['name' => '&nbsp;&nbsp;Premier league'],
+                ],
             ],
             'three level' => [
                 [
@@ -100,7 +112,12 @@ class CategoryTest extends TestCase
                     ['id' => 2, 'name' => 'Premier league', 'parent_id' => 1],
                     ['id' => 3, 'name' => 'Arsenal', 'parent_id' => 2],
                 ],
-                '<ul><li>Football<ul><li>Premier league<ul><li>Arsenal</li></ul></li></ul></li></ul>'
+                '<ul><li>Football<ul><li>Premier league<ul><li>Arsenal</li></ul></li></ul></li></ul>',
+                [
+                    ['name' => 'Football'],
+                    ['name' => '&nbsp;&nbsp;Premier league'],
+                    ['name' => '&nbsp;&nbsp;&nbsp;&nbsp;Arsenal'],
+                ],
             ],
         ];
     }
