@@ -7,7 +7,7 @@ use App\Services\HtmlList;
 use App\Services\SelectList;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class CategoryTest extends TestCase
 {

@@ -5,34 +5,37 @@
         <div class="top-bar-left">
             <ul class="dropdown menu" data-dropdown-menu>
                 <li class="menu-text"><a href="/category">Multi level categories</a></li>
-                <li class="has-submenu">
-                    <a href="/show-category/1">Football</a>
-                    <ul class="submenu menu vertical" data-submenu>
-                        <li><a href="#">Monitors</a></li>
-                        <li><a href="#">Tablets</a></li>
-                        <li>
-                            <a href="#">Computers</a>
-                            <ul class="submenu menu vertical" data-submenu>
-                                <li><a href="#">Desktops</a></li>
-                                <li><a href="#">Notebooks</a></li>
-                                <li>
-                                    <a href="#">Laptops</a>
-                                    <ul class="submenu menu vertical" data-submenu>
-                                        <li><a href="#">Asus</a></li>
-                                        <li><a href="#">Dell</a></li>
-                                        <li>
-                                            <a href="#">Acer</a>
-                                            <ul class="submenu menu vertical" data-submenu>
-                                                <li><a href="#">FullHD</a></li>
-                                                <li><a href="#">HD+</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
+                @foreach($categories as $cat)
+                    <a href="/show-category/{{$cat->id}}">{{$cat->name}}</a>
+                @endforeach
+                {{--                <li class="has-submenu">--}}
+{{--                    <a href="/show-category/1">Football</a>--}}
+{{--                    <ul class="submenu menu vertical" data-submenu>--}}
+{{--                        <li><a href="#">Monitors</a></li>--}}
+{{--                        <li><a href="#">Tablets</a></li>--}}
+{{--                        <li>--}}
+{{--                            <a href="#">Computers</a>--}}
+{{--                            <ul class="submenu menu vertical" data-submenu>--}}
+{{--                                <li><a href="#">Desktops</a></li>--}}
+{{--                                <li><a href="#">Notebooks</a></li>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#">Laptops</a>--}}
+{{--                                    <ul class="submenu menu vertical" data-submenu>--}}
+{{--                                        <li><a href="#">Asus</a></li>--}}
+{{--                                        <li><a href="#">Dell</a></li>--}}
+{{--                                        <li>--}}
+{{--                                            <a href="#">Acer</a>--}}
+{{--                                            <ul class="submenu menu vertical" data-submenu>--}}
+{{--                                                <li><a href="#">FullHD</a></li>--}}
+{{--                                                <li><a href="#">HD+</a></li>--}}
+{{--                                            </ul>--}}
+{{--                                        </li>--}}
+{{--                                    </ul>--}}
+{{--                                </li>--}}
+{{--                            </ul>--}}
+{{--                        </li>--}}
+{{--                    </ul>--}}
+{{--                </li>--}}
                 <li><a href="#">Videos</a></li>
                 <li>
                     <a href="#">Software</a>

@@ -10,6 +10,13 @@ class Category extends Model
     use HasFactory;
 
     /**
+     * @var array
+     */
+    protected $guarded = [];
+
+    public $timestamps = false;
+
+    /**
      * @var
      */
     public $categoryList;
@@ -34,5 +41,21 @@ class Category extends Model
             }
         }
         return $nested_categories;
+    }
+
+    /**
+     * @return object
+     */
+    public function children(): object
+    {
+        return $this->hasMany(Category::class, 'parent_id');
+    }
+
+    /**
+     * @return object
+     */
+    public function parent(): object
+    {
+        return $this->belongsTo(Category::class, 'parent_id');
     }
 }

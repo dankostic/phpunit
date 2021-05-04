@@ -10,7 +10,6 @@ class CategoryTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
-
     /**
      * A Dusk test example.
      *
@@ -92,7 +91,7 @@ class CategoryTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/category');
-            $this->assertEquals(18, count($browser->elements('ul.dropdown li')));
+            $this->assertEquals(6, count($browser->elements('ul.dropdown li')));
             $browser->assertSeeIn('ul.dropdown > li:nth-child(2) > a', 'Football');
             $browser->assertSeeIn('ul.dropdown > li:nth-child(3) > a', 'Videos');
             $browser->assertSeeIn('ul.dropdown > li:nth-child(4) > a', 'Software');
