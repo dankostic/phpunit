@@ -2,26 +2,48 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
+/**
+ * Class Calculator
+ * @package App\Http\Controllers
+ */
 class Calculator extends Controller
 {
-    public function add($a, $b)
+    /**
+     * @param int $a
+     * @param int $b
+     * @return int
+     */
+    public function add(int $a, int $b): int
     {
         return $a + $b;
     }
 
-    public function subtract($a, $b)
+    /**
+     * @param int $a
+     * @param int $b
+     * @return int
+     */
+    public function subtract(int $a, int $b): int
     {
         return $a - $b;
     }
 
-    public function multiply ($a, $b)
+    /**
+     * @param int $a
+     * @param int $b
+     * @return int
+     */
+    public function multiply(int $a, int $b): int
     {
         return $a * $b;
     }
 
-    public function divide ($a, $b)
+    /**
+     * @param int $a
+     * @param int $b
+     * @return int
+     */
+    public function divide(int $a, int $b): int
     {
         return $a / $b;
     }

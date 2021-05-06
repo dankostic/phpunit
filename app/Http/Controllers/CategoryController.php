@@ -3,21 +3,37 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
+/**
+ * Class CategoryController
+ * @package App\Http\Controllers
+ */
 class CategoryController extends Controller
 {
-    public function index()
+    /**
+     * @return View
+     */
+    public function index(): View
     {
         return view('category.index');
     }
 
-    public function showCategory($id)
+    /**
+     * @param $id
+     * @return View
+     */
+    public function showCategory($id): View
     {
         $category = 'Football';
         return view('category.index', compact('category'));
     }
 
-    public function saveCategory(Request $request)
+    /**
+     * @param Request $request
+     * @return View
+     */
+    public function saveCategory(Request $request): View
     {
         if($request->name == ''){
             $categorySaved = false;
@@ -27,13 +43,20 @@ class CategoryController extends Controller
         return view('category.index', compact('categorySaved'));
     }
 
-    public function editCategory()
+    /**
+     * @return View
+     */
+    public function editCategory(): View
     {
         $edit_category = 'Edit category';
         return view('category.index', compact('edit_category'));
     }
 
-    public function deleteCategory($id)
+    /**
+     * @param $id
+     * @return View
+     */
+    public function deleteCategory($id): View
     {
         $category_deleted = true;
         return view('category.index', compact('category_deleted'));

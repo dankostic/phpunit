@@ -3,6 +3,7 @@
 namespace Tests\Browser;
 
 use App\Models\Category;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
@@ -29,16 +30,17 @@ class BackendAcceptanceTest extends DuskTestCase
 
     public function test_can_add_child_category()
     {
-        $parent_category = Category::where('name', 'Football')->first();
+        $football = Category::where('name', 'Football')->first();
 
-        $child_category = new Category();
-        $child_category->name = "Premier league";
-
-        $parent_category->children()->save($child_category);
+        $football->children()->saveMany([
+            new Category(['name' => 'Premier league', 'description' => 'Description of PL']),
+            new Category(['name' => 'Bundesliga', 'description' => 'Description of BL']),
+            new Category(['name' => 'Serie A', 'description' => 'Description of SA']),
+        ]);
 
         $this->browse(function (Browser $browser) {
             $browser->visit('/category');
-            $browser->assertSeeIn('ul.dropdown > :nth-child(2) > :nth-child(2) > :nth-child(1) > a', 'Premier league');
+            $browser->assertSee('ul.dropdown > :nth-child(2) > :nth-child(2) > :nth-child(1) > a', 'Premier league');
         });
     }
 }

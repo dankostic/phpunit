@@ -155,10 +155,11 @@
 
         <hr />
     </div>
-    <script src="{{ asset('js/what-input.js') }}" defer></script>
-    <script src="{{ asset('js/jquery-2.1.4.min.js') }}" defer></script>
-    <script src="{{ asset('js/foundation.min.js') }}" defer></script>
-    <script>
-        $(document).foundation();
-    </script>
+
 @endsection
+<script src="{{ asset('js/what-input.js') }}"></script>
+<script src="{{ asset('js/jquery-2.1.4.min.js') }}"></script>
+<script src="{{ asset('js/foundation.min.js') }}"></script>
+<script>
+    $(document).foundation();
+</script>
