@@ -1,7 +1,10 @@
 <?php
 
 namespace Tests\Browser;
+use App\Models\Category;
 use App\Models\User;
+use App\Services\CategoryFactory;
+use Facebook\WebDriver\WebDriverBy;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
@@ -70,7 +73,19 @@ class CategoryTest extends DuskTestCase
             $browser->visit('/show-category/1')
                 ->click('a[href="/edit-category/1"]')
                 ->assertPathIs('/edit-category/1')
+                ->assertSee('Desc of Football')
                 ->assertSee('Edit category');
+        });
+    }
+
+    public function test_can_see_populated_form_data_on_category_edit()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/edit-category/1')
+                ->assertSee('Edit category');
+            $this->assertTrue(count($browser->driver->findElements(WebDriverBy::xpath('//*[@id="delete-category-confirmation"]'))) > 0);
+            $this->assertEquals('Football', $browser->element('input[name="name"]')->getAttribute('value'));
+            $this->assertEquals('Desc of Football', trim($browser->element('textarea[name="description"]')->getAttribute('value')));
         });
     }
 
@@ -94,11 +109,28 @@ class CategoryTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/category');
-            $this->assertEquals(7, count($browser->elements('ul.dropdown li')));
+            $this->assertEquals(8, count($browser->elements('ul.dropdown li')));
             $browser->assertSeeIn('ul.dropdown > li:nth-child(2) > a', 'Football');
-            $browser->assertSeeIn('ul.dropdown > li:nth-child(3) > a', 'Videos');
-            $browser->assertSeeIn('ul.dropdown > li:nth-child(4) > a', 'Software');
+            $browser->assertSeeIn('ul.dropdown > li:nth-child(4) > a', 'Videos');
+            $browser->assertSeeIn('ul.dropdown > li:nth-child(5) > a', 'Software');
           //  $browser->assertSeeIn('ul.dropdown > :nth-child(2) > :nth-child(2) > :nth-child(1) > a', 'Monitors');
+        });
+    }
+
+    public function test_can_see_select_option_list()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/category')
+                    ->assertSee('Basketball');
+        });
+    }
+
+    public function test_can_see_correct_id_in_select_list()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/edit-category/2')
+                ->assertSee('Basketball');
+            $this->assertEquals(2, $browser->element('#selected-category-list')->getAttribute('value'));
         });
     }
 }

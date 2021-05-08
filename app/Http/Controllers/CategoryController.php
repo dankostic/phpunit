@@ -21,10 +21,10 @@ class CategoryController extends Controller
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return View
      */
-    public function showCategory($id): View
+    public function showCategory(int $id): View
     {
         $category = Category::find($id);
         return view('category.index', compact('category'));
@@ -45,19 +45,21 @@ class CategoryController extends Controller
     }
 
     /**
+     * @param int $id
      * @return View
      */
-    public function editCategory(): View
+    public function editCategory(int $id): View
     {
+        $category = Category::find($id);
         $edit_category = 'Edit category';
-        return view('category.index', compact('edit_category'));
+        return view('category.index', compact('edit_category', 'category'));
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return View
      */
-    public function deleteCategory($id): View
+    public function deleteCategory(int $id): View
     {
         $football = Category::find($id);
         $football->delete();

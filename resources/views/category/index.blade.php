@@ -87,37 +87,27 @@
                     @csrf
                 <label
                 >Name
-                    <input type="text" placeholder="Name" name="name" />
+                    <input type="text" placeholder="Name" name="name" value="<?= $category->name ?? null ?>" />
                 </label>
                 <label
                 >Description
-                    <textarea placeholder="Description" name="description"></textarea>
+                    <textarea placeholder="Description" name="description">
+                        <?= $category->description ?? null ?>
+                    </textarea>
                 </label>
                 <label
                 >Parent category
-                    <select>
+                    <select id="selected-category-list">
                         <option>--choose--</option>
-                        <option value="">Football</option>
-                        <option value="">&nbsp;&nbsp;Monitors</option>
-                        <option value="">&nbsp;&nbsp;Tablets</option>
-                        <option value="">&nbsp;&nbsp;Computers</option>
-                        <option value="">&nbsp;&nbsp;&nbsp;&nbsp;Desktops</option>
-                        <option value="">&nbsp;&nbsp;&nbsp;&nbsp;Notebooks</option>
-                        <option value="">&nbsp;&nbsp;&nbsp;&nbsp;Laptops</option>
-                        <option value="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Asus</option>
-                        <option value="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dell</option>
-                        <option value="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Acer</option>
-                        <option value=""
-                        >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FullHD</option
-                        >
-                        <option value=""
-                        >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HD+</option
-                        >
-                        <option value="">Videos</option>
-                        <option value="">Software</option>
-                        <option value="">&nbsp;&nbsp;Operating systems</option>
-                        <option value="">&nbsp;&nbsp;&nbsp;&nbsp;Linux</option>
-                        <option value="">&nbsp;&nbsp;Servers</option>
+                        @if(isset($edit_category))
+                        @foreach($select_categories as $sc)
+                            <option selected value="{{$sc->id}}">{{$sc->name}}</option>
+                        @endforeach
+                        @else
+                            @foreach($select_categories as $sc)
+                                <option value="{{$sc->id}}">{{$sc->name}}</option>
+                            @endforeach
+                        @endif
                     </select>
                 </label>
                 <input

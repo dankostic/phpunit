@@ -23,10 +23,23 @@ class CreateCategoriesTable extends Migration
             $table->foreign('parent_id')->references('id')->on('categories')->onDelete('cascade');
         });
 
-        Category::create([
-            'name' => 'Football',
-            'description' => 'Desc of Football'
-        ]);
+        $categories = [
+            [
+                'name' => 'Football',
+                'description' => 'Desc of Football'
+            ],
+            [
+                'name' => 'Basketball',
+                'description' => 'Desc of Basketball'
+            ]
+
+        ];
+        foreach ($categories as $cat) {
+            Category::factory()->create([
+                'name' => $cat['name'],
+                'description' => $cat['description'],
+            ]);
+        }
     }
 
     /**
