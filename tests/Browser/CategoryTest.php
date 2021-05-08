@@ -46,17 +46,20 @@ class CategoryTest extends DuskTestCase
             $browser->visit('/category')
                 ->click('#delete-category-confirmation')
                 ->acceptDialog()
-                ->assertSee('Category was deleted');
+                ->assertSee('Category was deleted')
+                ->assertDontSeeIn('ul.dropdown > li:nth-child(2) > a', 'Football')
+                ->assertPathIs('/delete-category/1');
         });
     }
 
     public function test_can_see_edit_and_delete_links()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit('/category');
+            $browser->visit('/show-category/1');
             $h5 = $browser->element('div.basic-card-content h5')->getAttribute('innerHTML');
                 $browser->assertSeeLink('Football')
                 ->assertSee($h5)
+                ->assertSee('Desc of Football')
                 ->click();
         });
     }
@@ -91,11 +94,11 @@ class CategoryTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/category');
-            $this->assertEquals(6, count($browser->elements('ul.dropdown li')));
+            $this->assertEquals(7, count($browser->elements('ul.dropdown li')));
             $browser->assertSeeIn('ul.dropdown > li:nth-child(2) > a', 'Football');
             $browser->assertSeeIn('ul.dropdown > li:nth-child(3) > a', 'Videos');
             $browser->assertSeeIn('ul.dropdown > li:nth-child(4) > a', 'Software');
-            $browser->assertSeeIn('ul.dropdown > :nth-child(2) > :nth-child(2) > :nth-child(1) > a', 'Monitors');
+          //  $browser->assertSeeIn('ul.dropdown > :nth-child(2) > :nth-child(2) > :nth-child(1) > a', 'Monitors');
         });
     }
 }

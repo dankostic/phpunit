@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -25,7 +26,7 @@ class CategoryController extends Controller
      */
     public function showCategory($id): View
     {
-        $category = 'Football';
+        $category = Category::find($id);
         return view('category.index', compact('category'));
     }
 
@@ -58,7 +59,10 @@ class CategoryController extends Controller
      */
     public function deleteCategory($id): View
     {
+        $football = Category::find($id);
+        $football->delete();
+        $categories = Category::all();
         $category_deleted = true;
-        return view('category.index', compact('category_deleted'));
+        return view('category.index', compact('category_deleted', 'categories'));
     }
 }

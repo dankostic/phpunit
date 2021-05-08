@@ -6,7 +6,7 @@
             <ul class="dropdown menu" data-dropdown-menu>
                 <li class="menu-text"><a href="/category">Multi level categories</a></li>
                 @foreach($categories as $cat)
-                    <a href="/show-category/{{$cat->id}}">{{$cat->name}}</a>
+                    <li><a href="/show-category/{{$cat->id}}">{{$cat->name}}</a></li>
                 @endforeach
                 {{--                <li class="has-submenu">--}}
 {{--                    <a href="/show-category/1">Football</a>--}}
@@ -131,12 +131,9 @@
             <div class="medium-6 large-5 cell large-offset-1">
                 <div class="basic-card">
                     <div class="basic-card-content content callout secondary">
-                        <h5><?= $category ?? "Computer"?></h5>
+                        <h5><?= $category->name ?? "Computer"?></h5>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi
-                            saepe, asperiores dolor nesciunt dolore, accusamus minus
-                            repellendus vero odio, quibusdam, ipsum nisi in a molestiae ex
-                            assumenda nulla eveniet eos!
+                            <?= $category->description ?? "Computer description of category"?>
                         </p>
                     </div>
                     <div class="links callout primary">

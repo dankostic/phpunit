@@ -40,7 +40,7 @@ class BackendAcceptanceTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) {
             $browser->visit('/category');
-            $browser->assertSee('ul.dropdown > :nth-child(2) > :nth-child(2) > :nth-child(1) > a', 'Premier league');
+            $browser->assertSee('Premier league');
         });
     }
 }
