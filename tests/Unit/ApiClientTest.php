@@ -14,6 +14,8 @@ ApiClientTest extends TestCase
    protected $httpClient;
    protected $apiClient;
    protected $mockHandler;
+   protected $jsonClient;
+   protected $jsonApiClient;
 
    public function setUp(): void
    {
@@ -23,6 +25,9 @@ ApiClientTest extends TestCase
            'handler' => $this->mockHandler,
        ]);
        $this->apiClient = new ApiClient($this->httpClient);
+       $this->jsonClient = new Client(['base_uri' => 'http://localhost:3000/']);
+       $this->jsonApiClient = new ApiClient($this->jsonClient);
+
 
    }
 
@@ -30,6 +35,8 @@ ApiClientTest extends TestCase
    {
        $this->httpClient = null;
        $this->apiClient = null;
+       $this->jsonClient = null;
+       $this->jsonApiClient = null;
    }
 
    public function test_show_postcode_data()
@@ -47,7 +54,16 @@ ApiClientTest extends TestCase
         $this->mockHandler->append(new Response(200, [], file_get_contents(__DIR__ . '/Data/postcodes.json')));
         $response = $this->apiClient->getPostcodesData(["OX49 5NU", "M32 0JG", "NE30 1DP"]);
         $this->assertEquals(200, $response->getStatusCode());
-        $data = (object) json_decode($response->getBody(), true);
+        $data = json_decode($response->getBody());
         $this->assertCount(3, $data->result);
+    }
+
+    public function test_show_post()
+    {
+        $response = $this->jsonApiClient->getPost(1);
+        $this->assertEquals(200, $response->getStatusCode());
+
+        $data = json_decode($response->getBody(), true);
+        $this->assertArrayHasKey('title', $data);
     }
 }

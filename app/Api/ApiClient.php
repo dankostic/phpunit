@@ -23,4 +23,9 @@ class ApiClient {
         ];
         return $this->httpClient->post('postcodes', $postcodes);
     }
+
+    public function getPost(int $post_id)
+    {
+        return $this->httpClient->get('posts/' . $post_id);
+    }
 }
