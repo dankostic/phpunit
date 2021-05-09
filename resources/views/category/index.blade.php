@@ -115,6 +115,9 @@
                     class="button expanded"
                     value="Save category"
                 />
+                    @if(isset($edit_category))
+                    <input type="hidden" name="category_id" value="<?=$category->id ?>">
+                    @endif
                 </form>
             </div>
 

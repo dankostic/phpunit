@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
 /**
@@ -36,12 +37,24 @@ class CategoryController extends Controller
      */
     public function saveCategory(Request $request): View
     {
-        if($request->name == ''){
-            $categorySaved = false;
+        if (!empty($request->category_id)) {
+            $category = Category::find($request->category_id);
+            $category->name = $request->name;
+            $category->description = $request->description;
+            $category->save();
         } else {
-            $categorySaved = true;
+            if ($request->name == '') {
+                $categorySaved = false;
+            } else {
+                $categorySaved = true;
+                Category::create([
+                    'name' => $request->name,
+                    'description' => $request->description,
+                ]);
+            }
         }
-        return view('category.index', compact('categorySaved'));
+        $categories = Category::all();
+        return view('category.index', compact('categorySaved', 'categories'));
     }
 
     /**

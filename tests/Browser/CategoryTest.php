@@ -133,4 +133,39 @@ class CategoryTest extends DuskTestCase
             $this->assertEquals(2, $browser->element('#selected-category-list')->getAttribute('value'));
         });
     }
+
+    public function test_can_see_category_id_to_be_edited()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/edit-category/2')
+                ->assertSourceHas('input type="hidden" name="category_id"')
+                ->visit('/show-category/2')
+                ->assertSourceMissing('input type="hidden" name="category_id"');
+        });
+    }
+
+    public function test_can_edit_category()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/edit-category/2')
+                    ->type('name', 'Handball')
+                    ->type('description', 'Desc of Handball')
+                    ->press('Save category')
+                    ->visit('/show-category/2')
+                    ->assertDontSee('Basketball')
+                    ->assertSee('Handball');
+        });
+    }
+
+    public function test_can_add_category()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/category')
+                ->type('name', 'Tennis')
+                ->type('description', 'Desc of Tennis')
+                ->press('Save category')
+                ->visit('/show-category/3')
+                ->assertSee('Tennis');
+        });
+    }
 }
