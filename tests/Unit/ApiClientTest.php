@@ -66,4 +66,23 @@ ApiClientTest extends TestCase
         $data = json_decode($response->getBody(), true);
         $this->assertArrayHasKey('title', $data);
     }
+
+    public function test_add_post()
+    {
+        $this->jsonApiClient->addPost(['id' => 2, 'title' => 'api-client', 'author' => 'dankostic']);
+        $response = $this->jsonApiClient->getPost(2);
+        $this->assertEquals(200, $response->getStatusCode());
+
+        $data = json_decode($response->getBody());
+        $this->assertSame('dankostic', $data->author);
+    }
+
+    /**
+     * @depends test_add_post
+     */
+    public function test_delete_post()
+    {
+        $response = $this->jsonApiClient->deletePost(2);
+        $this->assertEquals(200, $response->getStatusCode());
+    }
 }
