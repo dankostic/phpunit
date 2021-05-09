@@ -73,4 +73,20 @@ class ApiClient
     {
         return $this->httpClient->delete('posts/' . $id);
     }
+
+    public function updatePost(int $id, array $patch)
+    {
+        $patch = [
+            'json' => $patch
+        ];
+        return $this->httpClient->patch('posts/' . $id, $patch);
+    }
+
+    public function replacePost(int $id, array $post)
+    {
+        $post = [
+            'json' => $post
+        ];
+        return $this->httpClient->put('posts/' . $id, $post);
+    }
 }

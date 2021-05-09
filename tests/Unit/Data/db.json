@@ -1,9 +1,9 @@
 {
   "posts": [
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
+      "title": "json-replace-server",
+      "author": "dankostic",
+      "id": 1
     }
   ],
   "comments": [

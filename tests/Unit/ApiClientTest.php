@@ -85,4 +85,25 @@ ApiClientTest extends TestCase
         $response = $this->jsonApiClient->deletePost(2);
         $this->assertEquals(200, $response->getStatusCode());
     }
+
+    public function test_update_post()
+    {
+        $this->jsonApiClient->updatePost(1, ['title' => 'json-api-server']);
+        $response = $this->jsonApiClient->getPost(1);
+        $this->assertEquals(200, $response->getStatusCode());
+
+        $data = json_decode($response->getBody());
+        $this->assertSame('json-api-server', $data->title);
+    }
+
+    public function test_replace_post()
+    {
+        $this->jsonApiClient->replacePost(1, ['title' => 'json-replace-server', 'author' => 'dankostic']);
+        $response = $this->jsonApiClient->getPost(1);
+        $this->assertEquals(200, $response->getStatusCode());
+
+        $data = json_decode($response->getBody());
+        $this->assertEquals('dankostic', $data->author);
+        $this->assertSame('json-replace-server', $data->title);
+    }
 }
